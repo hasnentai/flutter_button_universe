@@ -69,6 +69,7 @@ class _MyButtonState extends State<MyButton>
       animation: _animation,
       builder: (context, _) {
         final t = _animation.value;
+        print(-3 + t * 1);
         return ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Container(
@@ -88,12 +89,12 @@ class _MyButtonState extends State<MyButton>
 
                 // These need to be adjusted to get the same effect
                 begin: Alignment(
-                  -3 + t * 1,
-                  -1,
+                  -2.0 + 2.0 * t, // Adjust the starting point dynamically
+                  -1.0,
                 ),
                 end: Alignment(
-                  3 + t * 1,
-                  1,
+                  2.0 + 2.0 * t, // Adjust the ending point dynamically
+                  1.0,
                 ),
               ),
             ),
