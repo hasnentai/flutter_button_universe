@@ -13,7 +13,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(brightness: Brightness.dark),
       home: const Scaffold(
         body: Center(
-          child: MyButton(),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              MyButton(text: "Animated Gradient Button"),
+              SizedBox(height: 25),
+              MyButton(text: "Smaller"),
+            ],
+          ),
         ),
       ),
     );
@@ -21,7 +28,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyButton extends StatefulWidget {
-  const MyButton({super.key});
+  const MyButton({super.key, required this.text});
+
+  final String text;
 
   @override
   State<MyButton> createState() => _MyButtonState();
@@ -42,12 +51,12 @@ class _MyButtonState extends State<MyButton>
     );
 
     _animation = Tween<double>(
-      begin: -580,
-      end: 0,
+      begin: 0,
+      end: 1,
     ).animate(
       CurvedAnimation(
         parent: _controller,
-        curve: Curves.linear,
+        curve: Curves.easeInOut,
       ),
     );
 
@@ -59,51 +68,47 @@ class _MyButtonState extends State<MyButton>
     return AnimatedBuilder(
       animation: _animation,
       builder: (context, _) {
+        final t = _animation.value;
         return ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: SizedBox(
-            width: 220,
-            height: 50,
-            child: Stack(
-              children: [
-                Positioned(
-                  left: _animation.value,
-                  child: Container(
-                    width: 800,
-                    height: 50,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.red,
-                          Colors.purple,
-                          Colors.pink,
-                          Colors.orange,
-                          Colors.yellow,
-                          Colors.green,
-                          Colors.cyan,
-                          Colors.blue,
-                          Colors.red,
-                        ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                    ),
-                  ),
+          child: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: const [
+                  Colors.red,
+                  Colors.purple,
+                  Colors.pink,
+                  Colors.orange,
+                  Colors.yellow,
+                  Colors.green,
+                  Colors.cyan,
+                  Colors.blue,
+                  Colors.red,
+                ],
+
+                // These need to be adjusted to get the same effect
+                begin: Alignment(
+                  -3 + t * 1,
+                  -1,
                 ),
-                Container(
-                  margin: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.9),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Animated Gradient Button",
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ),
+                end: Alignment(
+                  3 + t * 1,
+                  1,
                 ),
-              ],
+              ),
+            ),
+            child: Container(
+              margin: const EdgeInsets.all(2),
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.9),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Text(
+                widget.text,
+                style: const TextStyle(color: Colors.white, fontSize: 14),
+                textAlign: TextAlign.center,
+              ),
             ),
           ),
         );
