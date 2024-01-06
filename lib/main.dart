@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:glow_button/jelly_button.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyJellyButton());
 }
 
 class MyApp extends StatelessWidget {
