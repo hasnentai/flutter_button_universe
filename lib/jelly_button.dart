@@ -16,13 +16,10 @@ class MyJellyButton extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter App!!',
       theme: ThemeData(
-        colorSchemeSeed: Colors.indigo,
         useMaterial3: true,
-        brightness: Brightness.light,
+        brightness: Brightness.dark,
       ),
       darkTheme: ThemeData(
-        colorSchemeSeed: Colors.blue,
-        useMaterial3: true,
         brightness: Brightness.dark,
       ),
       home: const MyHomePage(title: 'Flutter Example App'),
@@ -165,7 +162,10 @@ class _MyHomePageState extends State<MyHomePage>
                     child: Center(
                       child: Text(
                         name,
-                        style: const TextStyle(color: Colors.white),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
